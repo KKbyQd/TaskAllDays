@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskAlldays · 工时管家</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .calendar-grid{grid-auto-rows:minmax(125px,auto)}.day-cell{height:auto}.day-number{display:flex;align-items:center;gap:5px}.day-status{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle}.day-status.green{background:#49b889;box-shadow:0 0 0 2px rgba(73,184,137,.16)}.day-status.yellow{background:#e4ad4c;box-shadow:0 0 0 2px rgba(228,173,76,.16)}.day-status.red{background:#dd4f5f;box-shadow:0 0 0 2px rgba(221,79,95,.16)}.day-status.explosion{width:auto;height:auto;border-radius:0;background:none;color:#dd3152;font-size:12px;font-weight:800;line-height:1}.day-task{cursor:grab}.day-task:active{cursor:grabbing}.day-task-complete{color:#9aa1ad!important;filter:grayscale(1);opacity:.72}.day-cell.drag-over{background:#eef4ff}.progress{display:flex;overflow:hidden}.progress i{display:block;height:100%}.progress-done{background:#9aa1ad!important}.progress-pending{background:var(--accent)!important}.allocation-complete{color:#8d95a2;text-decoration:line-through}.drawer-row{display:flex;align-items:center;gap:8px}.drawer-row input{flex:1}.drawer-complete{padding:7px 10px;white-space:nowrap}.completion-details{grid-column:1 / -1;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:grid;gap:6px;color:#687386;font-size:12px}.completion-detail{display:flex;gap:5px;flex-wrap:wrap}.completion-dialog-backdrop{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(17,28,47,.48)}.completion-dialog{width:min(440px,calc(100vw - 32px));padding:24px;border-radius:10px;background:#fff;box-shadow:0 20px 50px rgba(37,53,85,.2)}.completion-dialog h2{margin:0 0 16px;font-size:20px}.completion-dialog textarea{width:100%;min-height:110px;resize:vertical;padding:10px;border:1px solid var(--line);border-radius:7px}.completion-dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.stats-panel{display:grid;gap:18px}.stats-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.stats-toolbar label,.stats-card-head select{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.stats-toolbar select,.stats-card-head select{border:1px solid var(--line);border-radius:6px;background:#fff;padding:8px 10px;color:var(--ink)}.segmented{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#fff}.segmented button{padding:9px 14px;background:#fff;color:var(--muted)}.segmented button.active{background:var(--blue);color:#fff}.stats-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:18px}.stats-card{min-width:0;padding:22px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}.stats-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.stats-card-head small{color:var(--muted)}.stats-card-head h2{margin:6px 0 0;font-size:18px}.bar-chart{height:270px;margin-top:24px;display:flex;align-items:stretch;gap:8px;border-bottom:1px solid var(--line);padding:0 4px}.bar-item{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px}.bar-track{height:220px;width:min(34px,70%);display:flex;align-items:flex-end;background:#f1f4f8;border-radius:5px 5px 0 0;overflow:hidden}.bar-track i{display:block;width:100%;min-height:2px;background:var(--blue);border-radius:5px 5px 0 0}.bar-value,.bar-item small{font-size:10px;color:var(--muted);white-space:nowrap}.pie-wrap{display:grid;place-items:center;gap:22px;padding:26px 0 10px}.pie-chart{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--blue) 0 var(--done),#e8edf3 var(--done) 100%);position:relative}.pie-chart::after{content:'';position:absolute;inset:32px;border-radius:50%;background:#fff}.pie-chart span{position:relative;z-index:1;font-size:18px;font-weight:700}.pie-legend{display:grid;gap:10px;color:var(--muted);font-size:13px}.pie-legend span{display:flex;align-items:center;gap:8px}.pie-legend b{color:var(--ink);margin-left:4px}.pie-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.pie-dot.done{background:var(--blue)}.pie-dot.pending{background:#e8edf3}
+    @media(max-width:900px){.stats-grid{grid-template-columns:1fr}.bar-chart{gap:4px}.bar-track{width:min(26px,75%)}}
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">◷</span><span class="brand-copy"><b>TaskAlldays</b><small>个人工时管家</small></span></div>
+      <nav class="nav" aria-label="主导航">
+        <button class="nav-item active" data-view="tasks"><span>▤</span>任务列表</button>
+        <button class="nav-item" data-view="calendar"><span>□</span>月历排布</button>
+        <button class="nav-item" data-view="stats"><span>▥</span>统计分析</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span>设置中心</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="focus-note"><span class="pulse"></span><div><b>专注于今天</b><small id="sidebarSummary">准备开始你的计划</small></div></div><button class="new-button" id="newTaskButton">＋ 新建任务</button></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><div class="eyebrow" id="todayLabel">2026 年 9 月 12 日 · 星期六</div><h1 id="viewTitle">任务列表</h1></div><div class="top-actions"><button class="icon-button" id="quickToday" title="回到今天">⌂</button><button class="avatar" title="个人模式">我</button></div></header>
+      <section id="viewRoot"></section>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true"><div class="modal-head"><div><span class="eyebrow">WORK ITEM</span><h2 id="modalTitle">新建任务</h2></div><button class="close-button" id="closeModal">×</button></div><form id="taskForm"><label>任务名称<input id="taskName" maxlength="50" required placeholder="例如：完成产品方案评审"></label><div class="form-grid"><label>预计工时（小时）<input id="taskHours" type="number" min="0.5" step="0.5" required placeholder="8"></label><label>分配工作日<input id="taskDays" type="number" min="1" step="1" required value="1"></label></div><label>截止日期<input id="taskDeadline" type="date"></label><label>备注<textarea id="taskNote" maxlength="500" rows="3" placeholder="补充背景、交付物或提醒"></textarea></label><div class="allocation-preview" id="allocationPreview">系统会从下一个工作日开始自动均分工时。</div><div class="modal-actions"><button type="button" class="button secondary" id="cancelModal">取消</button><button class="button primary" type="submit">保存任务</button></div></form></section></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

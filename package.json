@@ -1,0 +1,30 @@
+{
+  "name": "task-alldays",
+  "version": "1.0.0",
+  "description": "Personal work-hour task planner for Windows",
+  "author": "TaskAlldays",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.taskalldays.desktop",
+    "productName": "TaskAlldays",
+    "files": ["main.js", "preload.js", "index.html", "styles.css", "app.js"],
+    "win": {
+      "target": ["nsis"],
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    }
+  }
+}
